@@ -1,15 +1,16 @@
 import express from "express";
-import { getAll, Create, logOut } from "../Controllers/auth.controller.js";
+import {
+  GetAll,
+  Create,
+  Delete,
+  Update,
+  GetSingle,
+} from "../Controllers/auth.controller.js";
 
 const router = express.Router();
 
-//Signup Router :
-router.post("/signup", signUp);
-
-//Login Router :
-router.post("/login", login);
-
-//Logout Router:
-router.post("/logout", logOut);
-
-export default router;
+router.get("/GetAll", GetAll);
+router.post("/Create", Create);
+router.delete("/Delete", Delete);
+router.put("/Update", Update);
+router.get("/GetSingle/:id", GetSingle);
