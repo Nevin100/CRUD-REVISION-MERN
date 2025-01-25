@@ -6,11 +6,12 @@ import {
   Update,
   GetSingle,
 } from "../Controllers/auth.controller.js";
+import { protectedRoute } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-router.get("/GetAll", GetAll);
-router.post("/Create", Create);
-router.delete("/Delete", Delete);
-router.put("/Update", Update);
-router.get("/GetSingle/:id", GetSingle);
+router.get("/GetAll", protectedRoute, GetAll);
+router.post("/Create", protectedRoute, Create);
+router.delete("/Delete", protectedRoute, Delete);
+router.put("/Update", protectedRoute, Update);
+router.get("/GetSingle/:id", protectedRoute, GetSingle);
