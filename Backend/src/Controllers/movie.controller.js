@@ -3,7 +3,7 @@ import Movie from "../models/Movie.model.js";
 //Posting of Movie :
 export const Create = async (req, res) => {
   const { MovieName, director, description, releaseDate } = req.body;
-  const { user } = req.user;
+  const { _id: userId } = req.user;
   try {
     if (!MovieName || !director || !description || !releaseDate) {
       return res
@@ -16,7 +16,7 @@ export const Create = async (req, res) => {
       director,
       description,
       releaseDate,
-      userId: user._id,
+      userId,
     });
 
     await movie.save();
@@ -32,9 +32,9 @@ export const Create = async (req, res) => {
 
 //Updating Movie :
 export const Update = async (req, res) => {
-  const { id } = req.params.id;
+  const { id } = req.params;
   const { MovieName, director, description, releaseDate } = req.body;
-  const { user } = req.user;
+  const { _id: userId } = req.user;
   try {
     if (!MovieName || !director || !description || !releaseDate) {
       return res
@@ -42,7 +42,7 @@ export const Update = async (req, res) => {
         .json({ message: "No Changes required", error: true });
     }
 
-    const movie = await Movie.findOne({ _id: id, userId: user._id });
+    const movie = await Movie.findOne({ _id: id, userId });
     if (!movie) {
       return res
         .status(400)
@@ -66,13 +66,11 @@ export const Update = async (req, res) => {
     }
 
     await movie.save();
-    res
-      .status(200)
-      .json({
-        message: "Movie Updated Succesfully",
-        data: movie,
-        error: false,
-      });
+    res.status(200).json({
+      message: "Movie Updated Succesfully",
+      data: movie,
+      error: false,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Issue", error: true });
