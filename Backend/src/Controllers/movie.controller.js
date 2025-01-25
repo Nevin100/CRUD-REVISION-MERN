@@ -48,6 +48,31 @@ export const Update = async (req, res) => {
         .status(400)
         .json({ message: "No such Movie found", error: true });
     }
+
+    if (MovieName) {
+      movie.MovieName = MovieName;
+    }
+
+    if (director) {
+      movie.director = director;
+    }
+
+    if (description) {
+      movie.description = description;
+    }
+
+    if (releaseDate) {
+      movie.releaseDate = releaseDate;
+    }
+
+    await movie.save();
+    res
+      .status(200)
+      .json({
+        message: "Movie Updated Succesfully",
+        data: movie,
+        error: false,
+      });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Issue", error: true });
