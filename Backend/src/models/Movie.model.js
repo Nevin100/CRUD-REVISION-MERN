@@ -14,11 +14,12 @@ const movieSchema = new mongoose.Schema({
     required: true,
   },
   releaseDate: {
-    type: Number,
+    type: String,
     required: true,
   },
   userId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
 });

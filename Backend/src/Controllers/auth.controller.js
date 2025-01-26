@@ -73,7 +73,7 @@ export const login = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal Server Issue", error: true });
+    res.status(400).json({ message: "Internal Server Issue", error: true });
   }
 };
 

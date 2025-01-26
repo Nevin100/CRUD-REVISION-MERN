@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./Routes/auth.Routes.js";
-import crudRoutes from "./Routes/auth.Routes.js";
+import crudRoutes from "./Routes/crud.Routes.js";
 import { connectDb } from "./lib/db.js";
 import dotenv from "dotenv";
 

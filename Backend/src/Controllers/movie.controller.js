@@ -76,3 +76,12 @@ export const Update = async (req, res) => {
     res.status(500).json({ message: "Internal Server Issue", error: true });
   }
 };
+
+//Delete :
+export const Delete = async (req, res) => {
+  try {
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Issue", error: true });
+  }
+};
