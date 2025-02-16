@@ -27,13 +27,14 @@ export const signUp = async (req, res) => {
     });
 
     if (newUser) {
-      generateToken(newUser._id, res);
+      const token = generateToken(newUser._id, res);
       await newUser.save();
 
       res.status(200).json({
         _id: newUser._id,
         fullName: newUser.fullName,
         email: newUser.email,
+        accessToken: token,
         message: "User Created Successfully",
         error: false,
       });
@@ -64,10 +65,11 @@ export const login = async (req, res) => {
       res.status(201).json({ message: "Invalid Password", error: true });
     }
 
-    generateToken(user._id, res);
+    const token = generateToken(user._id, res);
     res.status(201).json({
       message: "Login Successfull",
       fullName: user.fullName,
+      accessToken: token,
       email: user.email,
       error: false,
     });

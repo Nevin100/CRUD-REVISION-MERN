@@ -64,9 +64,9 @@ const Login = () => {
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-4">
-            Didnt register?{" "}
+            Already register?{" "}
             <Link to="/login" className="text-blue-500 hover:underline">
-              SignUp
+              Login
             </Link>
           </p>
         </div>
