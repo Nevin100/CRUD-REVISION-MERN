@@ -1,12 +1,28 @@
 import { useState } from "react";
 import image1 from "../../public/image1.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  // const handleSubmit = () => {};
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/auth/login",
+        { email, password }
+      );
+      console.log(response);
+      if (response.status === 201) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="max-h-screen flex items-center justify-center mt-5">
@@ -47,6 +63,7 @@ const Login = () => {
             <button
               type="submit"
               className="w-full mt-4 py-2 bg-[#FF5C5C] text-white rounded-xl font-bold "
+              onSubmit={handleSubmit}
             >
               Login
             </button>

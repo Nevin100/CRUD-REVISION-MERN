@@ -7,13 +7,17 @@ export const signUp = async (req, res) => {
   const { fullName, email, password } = req.body;
   try {
     if (!fullName || !email || !password) {
-      res.status(201).json({ message: "Field is required", error: true });
+      return res
+        .status(400)
+        .json({ message: "Field is required", error: true });
     }
     //Checking whether the user already exist or not ?
     const user = await User.findOne({ email });
 
     if (user) {
-      res.status(201).json({ message: "User already exists", error: true });
+      return res
+        .status(400)
+        .json({ message: "User already exists", error: true });
     }
 
     // Hashing Password
@@ -30,19 +34,20 @@ export const signUp = async (req, res) => {
       const token = generateToken(newUser._id, res);
       await newUser.save();
 
-      res.status(200).json({
+      res.status(201).json({
         _id: newUser._id,
         fullName: newUser.fullName,
         email: newUser.email,
         accessToken: token,
         message: "User Created Successfully",
         error: false,
+        success: true,
       });
     } else {
-      res.status(500).json({ message: "Invalid Data", error: true });
+      res.status(400).json({ message: "Invalid Data", error: true });
     }
   } catch (error) {
-    res.status(201).json({ message: "Internal Server issue", error: true });
+    res.status(5000).json({ message: "Internal Server issue", error: true });
     console.log(error);
   }
 };
@@ -52,26 +57,27 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
   try {
     if (!email || !password) {
-      res.status(401).json({ message: "Fields cant be empty" });
+      return res.status(400).json({ message: "Fields cant be empty" });
     }
 
     const user = await User.findOne({ email });
     if (!user) {
-      res.status(401).json({ message: "Invalid Credentials" });
+      return res.status(400).json({ message: "Invalid Credentials" });
     }
 
     const isPassword = await bcrypt.compare(password, user.password);
     if (!isPassword) {
-      res.status(201).json({ message: "Invalid Password", error: true });
+      return res.status(400).json({ message: "Invalid Password", error: true });
     }
 
     const token = generateToken(user._id, res);
-    res.status(201).json({
+    res.status(200).json({
       message: "Login Successfull",
       fullName: user.fullName,
       accessToken: token,
       email: user.email,
       error: false,
+      success: true,
     });
   } catch (error) {
     console.log(error);

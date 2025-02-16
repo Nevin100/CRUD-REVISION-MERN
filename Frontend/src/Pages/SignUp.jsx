@@ -1,13 +1,37 @@
 import { useState } from "react";
 import image1 from "../../public/image1.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  // const handleSubmit = () => {};
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/auth/signup",
+        {
+          fullName,
+          email,
+          password,
+        },
+        {
+          Headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.data.accessToken) {
+        localStorage.setItem("token", response.data.accessToken);
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="max-h-screen flex items-center justify-center mt-5">
@@ -25,7 +49,7 @@ const Login = () => {
             SignUp
           </h2>
 
-          <form className="mt-4">
+          <form className="mt-4" onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-[#FF5C5C]">Full Name :</label>
               <input
@@ -57,6 +81,7 @@ const Login = () => {
             </div>
             <button
               type="submit"
+              onClick={handleSubmit}
               className="w-full mt-4 py-2 bg-[#FF5C5C] text-white rounded-xl font-bold "
             >
               Login
