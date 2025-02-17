@@ -1,13 +1,12 @@
 import { useState } from "react";
 import image1 from "../../public/image1.jpg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "../Context/ContextProvider.jsx";
+import { useAuth } from "../../Context/ContextProvider.jsx";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {
@@ -18,17 +17,17 @@ const Login = () => {
         "http://localhost:8000/api/auth/login",
         { email, password },
         {
-          Headers: {
+          headers: {
             "Content-Type": "application/json",
           },
           withCredentials: true,
         }
       );
-      console.log(response);
-      if (response.status === 201) {
+
+      if (response) {
         login(response.data.user);
-        localStorage.setItem("token", response.data.accessToken);
-        navigate("/home");
+        sessionStorage.setItem("token", response.data.accessToken);
+        window.location.href = "/home";
       }
     } catch (error) {
       console.log(error);

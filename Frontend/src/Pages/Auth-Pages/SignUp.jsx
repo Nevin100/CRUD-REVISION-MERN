@@ -19,14 +19,14 @@ const Login = () => {
           password,
         },
         {
-          Headers: {
+          headers: {
             "Content-Type": "application/json",
           },
           withCredentials: true,
         }
       );
       if (response.data.accessToken) {
-        localStorage.setItem("token", response.data.accessToken);
+        sessionStorage.setItem("token", response.data.accessToken);
         navigate("/login");
       }
     } catch (error) {
