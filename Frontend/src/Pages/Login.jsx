@@ -2,22 +2,33 @@ import { useState } from "react";
 import image1 from "../../public/image1.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../Context/ContextProvider.jsx";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axios.post(
         "http://localhost:8000/api/auth/login",
-        { email, password }
+        { email, password },
+        {
+          Headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
       );
       console.log(response);
       if (response.status === 201) {
-        navigate("/");
+        login(response.data.user);
+        localStorage.setItem("token", response.data.accessToken);
+        navigate("/home");
       }
     } catch (error) {
       console.log(error);
@@ -40,7 +51,7 @@ const Login = () => {
             LogIn
           </h2>
 
-          <form className="mt-4">
+          <form className="mt-4" onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-[#FF5C5C]">Email Address :</label>
               <input
@@ -63,7 +74,6 @@ const Login = () => {
             <button
               type="submit"
               className="w-full mt-4 py-2 bg-[#FF5C5C] text-white rounded-xl font-bold "
-              onSubmit={handleSubmit}
             >
               Login
             </button>

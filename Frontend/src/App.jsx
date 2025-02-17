@@ -11,7 +11,7 @@ const routes = (
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/" element={<Home />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/delete/:id" element={<Delete />} />
       <Route path="/edit/:id" element={<Edit />} />
       <Route path="/post" element={<Post />} />

@@ -22,6 +22,7 @@ const Login = () => {
           Headers: {
             "Content-Type": "application/json",
           },
+          withCredentials: true,
         }
       );
       if (response.data.accessToken) {
