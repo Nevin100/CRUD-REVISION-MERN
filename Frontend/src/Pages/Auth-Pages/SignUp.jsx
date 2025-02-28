@@ -2,6 +2,7 @@ import { useState } from "react";
 import image1 from "../../public/image1.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [fullName, setFullName] = useState("");
@@ -27,9 +28,19 @@ const Login = () => {
       );
       if (response.data.accessToken) {
         sessionStorage.setItem("token", response.data.accessToken);
+        Swal.fire({
+          title: "User Registeration Successful",
+          icon: "success",
+          draggable: true,
+        });
         navigate("/login");
       }
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "User Registeration failed",
+        text: "Something went wrong!",
+      });
       console.log(error);
     }
   };

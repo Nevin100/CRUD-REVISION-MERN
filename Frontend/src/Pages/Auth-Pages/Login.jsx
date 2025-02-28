@@ -1,17 +1,15 @@
 import { useState } from "react";
 import image1 from "../../public/image1.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "../../Context/ContextProvider.jsx";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth();
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post(
         "http://localhost:8000/api/auth/login",
@@ -23,13 +21,23 @@ const Login = () => {
           withCredentials: true,
         }
       );
-
-      if (response) {
-        login(response.data.user);
+      console.log("response : ", response);
+      console.log("response_AccessToken : ", response.data.accessToken);
+      if (response.data.accessToken) {
         sessionStorage.setItem("token", response.data.accessToken);
-        window.location.href = "/home";
+        Swal.fire({
+          title: "User Login Successful",
+          icon: "success",
+          draggable: true,
+        });
+        navigate("/");
       }
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "User Login failed",
+        text: "Something went wrong!",
+      });
       console.log(error);
     }
   };
@@ -37,7 +45,7 @@ const Login = () => {
   return (
     <div className="max-h-screen flex items-center justify-center mt-5">
       <div className="bg-transparent-200 shadow-white-2xl rounded-2xl overflow-hidden md:flex md:max-w-4xl border border-b-2 border-neutral-700">
-        <div className="hidden md:block md:w-1/2 sm:grid col-span-1 ">
+        <div className="hidden md:block md:w-1/2 sm:grid col-span-1">
           <img
             src={image1}
             alt="login-illustration"
