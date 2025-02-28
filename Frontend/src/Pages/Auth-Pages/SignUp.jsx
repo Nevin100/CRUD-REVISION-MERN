@@ -1,5 +1,5 @@
 import { useState } from "react";
-import image1 from "../../public/image1.jpg";
+import image1 from "../../public/Login.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -47,8 +47,8 @@ const Login = () => {
 
   return (
     <div className="max-h-screen flex items-center justify-center mt-5">
-      <div className="bg-transparent-200 shadow-white-2xl rounded-2xl overflow-hidden md:flex md:max-w-4xl border border-b-2 border-neutral-700">
-        <div className="hidden md:block md:w-1/2 sm:grid col-span-1 ">
+      <div className="bg-white shadow-2xl rounded-2xl sm:mt-9 md:flex md:max-w-5xl  border-neutral-700">
+        <div className="hidden md:block md:w-1/2 sm:grid col-span-1">
           <img
             src={image1}
             alt="login-illustration"
@@ -57,37 +57,41 @@ const Login = () => {
         </div>
 
         <div className="w-full p-8 md:w-1/2">
-          <h2 className="text-3xl font-bold text-[#FF5C5C] text-center pb-3">
-            SignUp
+          <h2 className="text-4xl font-bold text-[#FF5C5C] text-center pb-3 mb-3">
+            Register 🔒
           </h2>
 
           <form className="mt-4" onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label className="block text-[#FF5C5C]">Full Name :</label>
+              <label className="block text-[#FF5C5C] md:mb-1">
+                Full Name :
+              </label>
               <input
                 type="text"
                 value={fullName}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none text-neutral-200 bg-neutral-100/10 "
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none text-black bg-neutral-100/10 "
                 onChange={(e) => setFullName(e.target.value)}
               />
             </div>
 
             <div className="mb-4">
-              <label className="block text-[#FF5C5C]">Email Address :</label>
+              <label className="block text-[#FF5C5C] md:mb-1">
+                Email Address :
+              </label>
               <input
                 type="email"
                 value={email}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none text-neutral-200 bg-neutral-100/10 "
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none text-black bg-neutral-100/10 "
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
             <div className="mb-6">
-              <label className="block text-[#FF5C5C]">Password :</label>
+              <label className="block text-[#FF5C5C] md:mb-1">Password :</label>
               <input
                 type="password"
                 value={password}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none text-neutral-200 bg-neutral-100/10 "
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none text-black bg-neutral-100/10 "
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
@@ -100,7 +104,7 @@ const Login = () => {
             </button>
           </form>
 
-          <p className="text-center text-sm text-gray-500 mt-4">
+          <p className="text-center text-md font-semibold  text-gray-500 md:mt-6">
             Already register?{" "}
             <Link to="/login" className="text-blue-500 hover:underline">
               Login

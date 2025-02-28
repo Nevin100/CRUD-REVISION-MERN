@@ -9,15 +9,17 @@ import Post from "./Pages/Auth-Pages/SignUp.jsx";
 const App = () => {
   return (
     <Router>
-      <div className="absolute inset-0 -z-10 h-full w-full overflow-hidden min-h-screen items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#FF5C5C_100%)]">
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/delete/:id" element={<Delete />} />
-          <Route path="/edit/:id" element={<Edit />} />
-          <Route path="/post" element={<Post />} />
-        </Routes>
+      <div className="relative ">
+        <div className="md:top-20 h-screen overflow-hidden absolute inset-0 -z-10 w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_50%,#FF5C5C_100%)]">
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/delete/:id" element={<Delete />} />
+            <Route path="/edit/:id" element={<Edit />} />
+            <Route path="/post" element={<Post />} />
+          </Routes>
+        </div>
       </div>
     </Router>
   );
